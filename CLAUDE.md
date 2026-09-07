@@ -29,7 +29,7 @@ Source of truth is `paw.dtsi` + `paw_{left,right}.overlay`, not any diagram.
 - **Encoders**: EC11, A `P0.06` / B `P0.08`; `disabled` in `paw.dtsi`, enabled per-half in the overlays
 - **nice!view**: SPI3 — SCK `P0.10`, MOSI `P1.01` (underside pad), CS `P1.11`
   (Sharp `ls0xx` memory LCD — chip-select/clock/data only, **no D/C line**)
-- **RGB underglow**: WS2812 on SPI1 — SCK `P0.19`, MOSI `P0.21`; chain 28 (left) / 25 (right)
+- **RGB underglow**: none — this board has no LEDs; the WS2812/SPI1 config was removed
 
 ## nice!nano v2 pin naming
 
@@ -81,8 +81,9 @@ are fine — recheck if the board definition ever changes. `P0.09` is the trackb
 
 - `paw_left.overlay` `&spi1` sets `pinctrl-1` twice and never sets `pinctrl-0`; the right
   overlay sets `pinctrl-0` correctly. Looks like a typo in the left half.
-- **SPI1 (underglow) still routes to `P0.19` and `P0.21`, which are not broken out on a
-  nice!nano.** SPI3 had the same problem and was repointed to `P0.10` + `P1.01`; SPI1 was left
-  alone pending a decision. The only pins still free are the `P1.02` and `P1.07` pads.
-- The header is fully committed: all 18 pins are assigned, and `P1.01`/`P1.02` are now in use.
-  Any new peripheral has to take `P1.07` or displace something.
+- The header is fully committed: all 18 pins are assigned, plus the `P1.01` (nice!view MOSI)
+  and `P1.02` (encoder switch) pads. Only the `P1.07` pad is free — any new peripheral takes it
+  or displaces something.
+- `paw_left.conf` still lists `CONFIG_INPUT=y` and `CONFIG_SPI=y` twice. Harmless, untidied.
+- Every `NRF_PSEL` now targets a pin that physically exists on a nice!nano. Worth re-checking
+  if any bus is ever added or moved.
