@@ -27,7 +27,8 @@ Source of truth is `paw.dtsi` + `paw_{left,right}.overlay`, not any diagram.
 - **Cols right**: same six pins in reverse order; right adds `col-offset = <6>`
 - **Trackball**: PAW3222 on **SPI2** — SCK `P1.13`, MOSI+MISO both `P0.20` (3-wire SDIO), CS `P0.17`, IRQ `P0.09`
 - **Encoders**: EC11, A `P0.06` / B `P0.08`; `disabled` in `paw.dtsi`, enabled per-half in the overlays
-- **nice!view**: SPI3 — SCK `P0.23`, MOSI `P0.12`, CS `P1.11`
+- **nice!view**: SPI3 — SCK `P0.10`, MOSI `P1.01` (underside pad), CS `P1.11`
+  (Sharp `ls0xx` memory LCD — chip-select/clock/data only, **no D/C line**)
 - **RGB underglow**: WS2812 on SPI1 — SCK `P0.19`, MOSI `P0.21`; chain 28 (left) / 25 (right)
 
 ## nice!nano v2 pin naming
@@ -80,7 +81,8 @@ are fine — recheck if the board definition ever changes. `P0.09` is the trackb
 
 - `paw_left.overlay` `&spi1` sets `pinctrl-1` twice and never sets `pinctrl-0`; the right
   overlay sets `pinctrl-0` correctly. Looks like a typo in the left half.
-- SPI1 and SPI3 route to `P0.19`, `P0.21`, `P0.12`, `P0.23` — none of which are broken out
-  on a nice!nano. A dummy pin for an unused line is a known ZMK workaround (SPI2 does it
-  deliberately, MISO doubled onto `P0.20`), but here both SCK *and* MOSI are unexposed, so
-  underglow and nice!view may not have working pin assignments. Worth verifying on hardware.
+- **SPI1 (underglow) still routes to `P0.19` and `P0.21`, which are not broken out on a
+  nice!nano.** SPI3 had the same problem and was repointed to `P0.10` + `P1.01`; SPI1 was left
+  alone pending a decision. The only pins still free are the `P1.02` and `P1.07` pads.
+- The header is fully committed: all 18 pins are assigned, and `P1.01`/`P1.02` are now in use.
+  Any new peripheral has to take `P1.07` or displace something.
