@@ -1,10 +1,10 @@
 /*
- * Lunar Dust — left half (BLE central)
+ * SlabBoard — left half (BLE central)
  *
  * SPDX-License-Identifier: MIT
  */
 
-#include "lunar.dtsi"
+#include "slabboard.dtsi"
 
 &kscan0 {
     /* COL 0 (outer pinky) -> COL 5 (inner index) */

@@ -1,12 +1,12 @@
 # This file generates the GitHub Actions matrix.
 #
-# Lunar Dust: two nice!nano halves, BLE split, left half central.
+# SlabBoard: two nice!nano halves, BLE split, left half central.
 # The right half carries the EC12 encoder and the nice!view display.
 
 include:
   - board: nice_nano//zmk
-    shield: lunar_left
+    shield: slabboard_left
     snippet: studio-rpc-usb-uart
 
   - board: nice_nano//zmk
-    shield: lunar_right nice_view_gem
+    shield: slabboard_right nice_view_gem

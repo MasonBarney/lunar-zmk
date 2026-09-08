@@ -1,0 +1,5 @@
+config SHIELD_SLABBOARD_LEFT
+	def_bool $(shields_list_contains,slabboard_left)
+
+config SHIELD_SLABBOARD_RIGHT
+	def_bool $(shields_list_contains,slabboard_right)

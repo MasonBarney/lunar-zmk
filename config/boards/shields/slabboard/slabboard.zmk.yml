@@ -1,6 +1,6 @@
 file_format: "1"
-id: lunar
-name: Lunar Dust
+id: slabboard
+name: SlabBoard
 type: shield
 url: https://github.com/MasonBarney/lunar-zmk
 requires: [pro_micro]
@@ -10,5 +10,5 @@ features:
   - encoder
   - display
 siblings:
-  - lunar_left
-  - lunar_right
+  - slabboard_left
+  - slabboard_right

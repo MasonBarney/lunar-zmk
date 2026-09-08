@@ -1,18 +1,18 @@
-# Lunar Dust — ZMK config
+# SlabBoard — ZMK config
 
-ZMK firmware for a hand-wired wireless split keyboard ("Lunar Dust") on two
+ZMK firmware for a hand-wired wireless split keyboard ("SlabBoard") on two
 nice!nano v2 halves.
 
 Two shields live here:
 
 | Shield | Status |
 |---|---|
-| `lunar` | **Current.** Built to match the wiring diagram. This is what `build.yaml` builds. |
+| `slabboard` | **Current.** Built to match the wiring diagram. This is what `build.yaml` builds. |
 | `paw` | Legacy, from Bastardkb paw. Different matrix and peripherals. Kept for reference; not built. |
 
-## The `lunar` shield
+## The `slabboard` shield
 
-Source of truth is `lunar.dtsi` + `lunar_{left,right}.overlay`. It matches the
+Source of truth is `slabboard.dtsi` + `slabboard_{left,right}.overlay`. It matches the
 published wiring diagram exactly.
 
 - **Matrix**: 5 rows × 12 cols, **60 keys**, full 5×6 grid per half, no gaps
@@ -24,18 +24,18 @@ published wiring diagram exactly.
   the halves are mirror images. COL 6 is the inner index column, COL 11 outer pinky.
 - **Split**: BLE, **left half is central**
 - **Encoder** (right only): EC12, A `P0.17` / B `P0.20`; `disabled` in the dtsi,
-  enabled in `lunar_right.overlay`
+  enabled in `slabboard_right.overlay`
 - **nice!view** (right only): SPI3 — SCK `P0.10`, MOSI `P1.01` (underside pad),
   CS `P1.11`. Sharp `ls0xx` memory LCD: chip-select/clock/data only, **no D/C line**
 - **RGB underglow**: none. This board has no LEDs.
-- **Keymap**: `config/lunar.keymap` — 4 layers (Base / Lower / Raise / Adjust),
+- **Keymap**: `config/slabboard.keymap` — 4 layers (Base / Lower / Raise / Adjust),
   60 bindings each, encoder sensor-binding per layer
 
 ### Not yet wired up
 
 - **Azoteq TPS65 trackpad** (left half: SDA `P0.17`, SCL `P0.20`, RDY `P1.11`).
   ZMK has no in-tree Azoteq driver, so this needs an external west module. There
-  is a commented-out stub in `lunar_left.overlay` — its `compatible` and property
+  is a commented-out stub in `slabboard_left.overlay` — its `compatible` and property
   names are placeholders and **must** be replaced with the real binding, not guessed.
 - **EC12 push switch** (`P1.02` pad). The 5×6 grid is full, so the switch cannot
   live in the matrix; it needs a `zmk,kscan-gpio-direct` plus `kscan-composite`
@@ -76,14 +76,14 @@ is COL 1 and `P0.10` is the display clock, so both halves depend on it.
 ## Published artifacts
 
 - [nice!nano Wiring Reference](https://claude.ai/code/artifact/4d036039-86e7-446b-abcc-93ed0737649a)
-  — hand-wiring pinouts, bottom view. **The `lunar` shield matches this.**
+  — hand-wiring pinouts, bottom view. **The `slabboard` shield matches this.**
 - [velvet_v3_ui — Current Keymap](https://claude.ai/code/artifact/968bf346-db09-4f35-ac2e-a68893c8de75)
 - [Two-Board Wired Split](https://claude.ai/code/artifact/8e76b9d1-fb07-4564-a8e3-c07f71ce7310)
   — superseded UART-link design
 
 ## Open questions
 
-- **Right-half column order is the most likely thing to be wrong.** `lunar_right.overlay`
+- **Right-half column order is the most likely thing to be wrong.** `slabboard_right.overlay`
   assumes the halves are wired as mirror images and reverses the column list. If the
   right half is instead wired identically to the left, un-reverse it — the comment in
   that file says where.
@@ -92,6 +92,6 @@ is COL 1 and `P0.10` is the display clock, so both halves depend on it.
   dropped. The new file sets one snippet per entry; `nrf52840-nosd` is not carried
   over — restore it if it was actually needed.
 - `config/west.yml` still pulls `zmk-driver-paw3222` and `zmk-pmw3610-driver`. The
-  `lunar` shield uses neither; they are only there for the legacy `paw` shield.
+  `slabboard` shield uses neither; they are only there for the legacy `paw` shield.
 - `nice_nano//zmk` is kept as the board string because that is what this repo has
   been building with.

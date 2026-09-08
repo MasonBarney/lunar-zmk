@@ -1,10 +1,10 @@
 /*
- * Lunar Dust — right half (BLE peripheral)
+ * SlabBoard — right half (BLE peripheral)
  *
  * SPDX-License-Identifier: MIT
  */
 
-#include "lunar.dtsi"
+#include "slabboard.dtsi"
 
 &matrix_transform0 {
     col-offset = <6>;

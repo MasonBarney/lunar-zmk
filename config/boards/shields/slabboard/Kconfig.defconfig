@@ -1,7 +1,7 @@
-if SHIELD_LUNAR_LEFT
+if SHIELD_SLABBOARD_LEFT
 
 config ZMK_KEYBOARD_NAME
-	default "Lunar Dust"
+	default "SlabBoard"
 
 # Left half talks to the host; right half reports to it over BLE.
 # Newer ZMK renamed this to ZMK_SPLIT_ROLE_CENTRAL; this spelling is what
@@ -11,7 +11,7 @@ config ZMK_SPLIT_BLE_ROLE_CENTRAL
 
 endif
 
-if SHIELD_LUNAR_LEFT || SHIELD_LUNAR_RIGHT
+if SHIELD_SLABBOARD_LEFT || SHIELD_SLABBOARD_RIGHT
 
 config ZMK_SPLIT
 	default y
