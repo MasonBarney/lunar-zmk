@@ -2,7 +2,7 @@ file_format: "1"
 id: slabboard
 name: SlabBoard
 type: shield
-url: https://github.com/MasonBarney/lunar-zmk
+url: https://github.com/MasonBarney/SlabBoard
 requires: [pro_micro]
 exposes: [nice_view_header]
 features:
