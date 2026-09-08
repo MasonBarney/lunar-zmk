@@ -1,0 +1,19 @@
+if SHIELD_LUNAR_LEFT
+
+config ZMK_KEYBOARD_NAME
+	default "Lunar Dust"
+
+# Left half talks to the host; right half reports to it over BLE.
+# Newer ZMK renamed this to ZMK_SPLIT_ROLE_CENTRAL; this spelling is what
+# the previous config used and is still accepted.
+config ZMK_SPLIT_BLE_ROLE_CENTRAL
+	default y
+
+endif
+
+if SHIELD_LUNAR_LEFT || SHIELD_LUNAR_RIGHT
+
+config ZMK_SPLIT
+	default y
+
+endif

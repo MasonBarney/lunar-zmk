@@ -1,0 +1,59 @@
+/*
+ * Lunar Dust — left half (BLE central)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include "lunar.dtsi"
+
+&kscan0 {
+    /* COL 0 (outer pinky) -> COL 5 (inner index) */
+    col-gpios
+        = <&gpio1  6 GPIO_ACTIVE_HIGH>   /* COL 0  P1.06 */
+        , <&gpio0  9 GPIO_ACTIVE_HIGH>   /* COL 1  P0.09 */
+        , <&gpio1 15 GPIO_ACTIVE_HIGH>   /* COL 2  P1.15 */
+        , <&gpio0  2 GPIO_ACTIVE_HIGH>   /* COL 3  P0.02 */
+        , <&gpio0 29 GPIO_ACTIVE_HIGH>   /* COL 4  P0.29 */
+        , <&gpio0 31 GPIO_ACTIVE_HIGH>   /* COL 5  P0.31 */
+        ;
+};
+
+/*
+ * Azoteq TPS65 trackpad — NOT WIRED UP YET.
+ *
+ * The wiring diagram puts the trackpad on this half: SDA P0.17, SCL P0.20,
+ * RDY P1.11. ZMK has no in-tree Azoteq driver, so this needs an external
+ * west module before the node below can be filled in and enabled. Add the
+ * module to config/west.yml, then replace <compatible> and the property
+ * names with whatever that driver's binding actually defines — do not
+ * assume the names below.
+ *
+ * &pinctrl {
+ *     i2c0_default: i2c0_default {
+ *         group1 {
+ *             psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+ *                     <NRF_PSEL(TWIM_SCL, 0, 20)>;
+ *         };
+ *     };
+ *     i2c0_sleep: i2c0_sleep {
+ *         group1 {
+ *             psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+ *                     <NRF_PSEL(TWIM_SCL, 0, 20)>;
+ *             low-power-enable;
+ *         };
+ *     };
+ * };
+ *
+ * &i2c0 {
+ *     status = "okay";
+ *     pinctrl-0 = <&i2c0_default>;
+ *     pinctrl-1 = <&i2c0_sleep>;
+ *     pinctrl-names = "default", "sleep";
+ *
+ *     trackpad: trackpad@74 {
+ *         compatible = "<driver-specific>";
+ *         reg = <0x74>;
+ *         rdy-gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;   // RDY  P1.11
+ *     };
+ * };
+ */

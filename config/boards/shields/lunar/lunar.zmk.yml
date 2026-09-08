@@ -1,0 +1,14 @@
+file_format: "1"
+id: lunar
+name: Lunar Dust
+type: shield
+url: https://github.com/MasonBarney/lunar-zmk
+requires: [pro_micro]
+exposes: [nice_view_header]
+features:
+  - keys
+  - encoder
+  - display
+siblings:
+  - lunar_left
+  - lunar_right

@@ -1,0 +1,64 @@
+/*
+ * Lunar Dust — right half (BLE peripheral)
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include "lunar.dtsi"
+
+&matrix_transform0 {
+    col-offset = <6>;
+};
+
+&kscan0 {
+    /*
+     * Reversed relative to the left half: the halves are mirror images, so
+     * the same pin sits at the mirrored position on each side. COL 6 is the
+     * inner index column, COL 11 the outer pinky.
+     *
+     * If your right half is instead wired identically to the left (same pin
+     * counting from the inner edge on both), reverse this list back.
+     */
+    col-gpios
+        = <&gpio0 31 GPIO_ACTIVE_HIGH>   /* COL 6   P0.31 */
+        , <&gpio0 29 GPIO_ACTIVE_HIGH>   /* COL 7   P0.29 */
+        , <&gpio0  2 GPIO_ACTIVE_HIGH>   /* COL 8   P0.02 */
+        , <&gpio1 15 GPIO_ACTIVE_HIGH>   /* COL 9   P1.15 */
+        , <&gpio0  9 GPIO_ACTIVE_HIGH>   /* COL 10  P0.09 */
+        , <&gpio1  6 GPIO_ACTIVE_HIGH>   /* COL 11  P1.06 */
+        ;
+};
+
+&right_encoder {
+    status = "okay";
+};
+
+&pinctrl {
+    spi3_default: spi3_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 1, 1)>,    /* MOSI  P1.01 (underside pad) */
+                    <NRF_PSEL(SPIM_SCK, 0, 10)>;    /* SCK   P0.10 */
+        };
+    };
+
+    spi3_sleep: spi3_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 1, 1)>,
+                    <NRF_PSEL(SPIM_SCK, 0, 10)>;
+            low-power-enable;
+        };
+    };
+};
+
+/*
+ * nice!view — Sharp ls0xx memory LCD. Chip-select, clock and data only;
+ * the part has no D/C line. The display node itself lives in the
+ * nice_view_gem shield, which attaches to this label.
+ */
+nice_view_spi: &spi3 {
+    compatible = "nordic,nrf-spim";
+    pinctrl-0 = <&spi3_default>;
+    pinctrl-1 = <&spi3_sleep>;
+    pinctrl-names = "default", "sleep";
+    cs-gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;        /* CS  P1.11 */
+};

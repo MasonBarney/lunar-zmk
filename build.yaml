@@ -1,22 +1,12 @@
-# This file generates the GitHub Actions matrix
-# For simple board + shield combinations, add them
-# to the top level board and shield arrays, for more
-# control, add individual board + shield combinations to
-# the `include` property, e.g:
+# This file generates the GitHub Actions matrix.
 #
-# board: [ "nice_nano_v2" ]
-# shield: [ "corne_left", "corne_right" ]
-# include:
-#   - board: bdn9_rev2
-#   - board: nice_nano_v2
-#     shield: reviung41
-#
+# Lunar Dust: two nice!nano halves, BLE split, left half central.
+# The right half carries the EC12 encoder and the nice!view display.
 
 include:
   - board: nice_nano//zmk
-    shield: paw_left
+    shield: lunar_left
     snippet: studio-rpc-usb-uart
-    snippet: nrf52840-nosd
+
   - board: nice_nano//zmk
-    shield: paw_right
-    snippet: nrf52840-nosd
+    shield: lunar_right nice_view_gem
